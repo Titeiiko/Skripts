@@ -1,0 +1,123 @@
+# Script made my Titeiiko 
+# This Script gives addons of 1.12.2 MassiveCore!
+
+#Support Discord: https://discord.gg/Af4rGAK
+
+#Version: 1.0.0
+
+#Expectations of Future Updates:
+#Making the aliases for all commands /fa (faction addon)
+#Adding More Unique Commands
+#Ability to set True/False On Certain Things
+
+#FACTION COMMANDS ===================================================
+
+#factionaddonreload
+command /fcr:
+	permission: factions.addon.reload
+	description: Reloads Skript Easier
+	trigger:
+		make player execute command "sk reload MassiveCoreAddon"
+
+#war
+command /war [<text>]:
+	permission: factions.addon.war
+	description: War Nation
+	trigger:
+		if arg-text is not set:
+			send "&aMissing Input. /war (nation)"
+
+		if arg-text is set:
+			make player execute command "f enemy %arg-text%"
+			stop
+
+#peace
+command /peace [<text>]:
+	permission: factions.addon.peace
+	description: Make Peace
+	trigger:
+		if arg-text is not set:
+			send "&aNot Enough Input. /peace (nation)"
+
+		if arg-text is set:
+			make player execute command "f neutral %arg-text%"
+			stop
+			
+#Better Versions of Commands
+command /invite [<player>]:
+	permission: factions.addon.invite
+	description: Invite Others
+	trigger:
+		if arg-player is not set:
+			send "Pls Type Who To Invite"
+
+		if arg-player is set:
+			make player execute command "f invite add %arg-player%"
+			send "You have send invite to %arg-player%"
+			stop
+			
+			
+			
+#configs 
+command /fc [<text>] [<number>]:
+	permission: factions.addon.config
+	description: Configs
+	aliases: /fc
+	trigger: 
+#if nothing is set then just show the commands
+		if arg 1 is not set:
+			send "&6<===&bConfig Edits&6===>"
+			send "&b/fc facmax (number) &eFac Max Amount of Members"
+			send "&b/fc fPowerMax (number) &eFac Max Amount of Power" 
+			send "&b/fc fPowerPH (number) &eMember Power Gain Per Hour"
+			send "&b/fc fPowerPD (number) &eMember Power Loss Per Death"
+			send "&b/fc fPowerDefault (number) &eMember Default Power"
+#checks if arg 1 = facmax 
+		if arg 1 is set:
+			if arg 1 is "facmax":
+				if arg-number is not set:
+					send "&a====================================================="
+					send "&bPls type in the max amount of members that a faction can have"
+					send "&a====================================================="
+				if arg-number is set:
+					make player execute command "f config factionMemberLimit %arg 2%"
+					log "[MassiveCore Config Change] The factionMemberLimit has changed to %arg 2% by %player%"
+#factionPowerMax area
+			if arg 1 is "fPowerMax":
+				if arg-number is not set:
+					send "&a====================================================="
+					send "&bPls type in the max amount of power that a faction can have"
+					send "&a====================================================="
+				if arg-number is set:
+					make player execute command "f config factionPowerMax %arg 2%"
+					log "[MassiveCore Config Change] The factionPowerMax has changed to %arg 2% by %player%"
+#factionsPowerPerHour
+			if arg 1 is "fPowerPH":
+				if arg-number is not set:
+					send "&a====================================================="
+					send "&bPls type in the amount of power to gain per hour."
+					send "&a====================================================="
+				if arg-number is set:
+					make player execute command "f config powerPerHour %arg 2%"
+					log "[MassiveCore Config Change] The factionPowerHourGain has changed to %arg 2% by %player%"
+#factionsPowerPerDeath
+			if arg 1 is "fPowerPD":
+				if arg-number is not set:
+					send "&a====================================================="
+					send "&bPls type in the amount of power to loss per death."
+					send "&a====================================================="
+				if arg-number is set:
+					make player execute command "f config powerPerDeath %arg 2%"
+					log "[MassiveCore Config Change] The factionPowerLostPerDeath has changed to %arg 2% by %player%"
+#factionsPowerPerDeath
+			if arg 1 is "fPowerDefault":
+				if arg-number is not set:
+					send "&a====================================================="
+					send "&bPls type in the amount of power a member gets on join"
+					send "&a====================================================="
+				if arg-number is set:
+					make player execute command "f config defaultPlayerPower %arg 2%"
+					log "[MassiveCore Config Change] The factionPowerDefault has changed to %arg 2% by %player%"
+				
+					
+		
