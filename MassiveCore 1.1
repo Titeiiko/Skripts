@@ -1,0 +1,189 @@
+# Script made my Titeiiko 
+# This Script gives addons of 1.12.2 MassiveCore!
+
+#Support Discord: https://discord.gg/Af4rGAK
+
+#Version: 1.1.0
+
+#Changes (1.1.0):
+#Added /fah (Faction Addon Help)
+#Added /ally (Alliances)
+#Added Config Edits <True/False>
+
+#FACTION COMMANDS ===================================================
+
+#factionaddonreload
+command /far:
+	permission: factions.addon.reload
+	description: Reloads Skript Easier
+	trigger:
+		make player execute command "sk reload MassiveCoreAddon"
+
+#Faction Addon Help
+command /fah:
+	permission: factions.addon.help
+	description: Gives Commands
+	trigger:
+		send "&b<===&eFaction Addons&b===>"
+		send "&b/war (nation) &eWar a Nation"
+		send "&b/peace (nation) &eMake Peace" 
+		send "&b/invite (player) &eSend Invite to Player"
+		send "&b/ally (faction) &eSend Ally Request"
+		send "&b/relation Sends &eList of All Relations"
+		send "&b<===&eFaction Staff Addons&b===>"
+		send "&b/fc &bShows Config &eEdits"
+		send "&b/fd &bShows Config &eEdits <true/false>"
+
+#war
+command /war [<text>]:
+	permission: factions.addon.war
+	description: War Nation
+	trigger:
+		if arg-text is not set:
+			send "&aMissing Input. /war (nation)"
+
+		if arg-text is set:
+			make player execute command "f enemy %arg-text%"
+			stop
+
+#peace
+command /peace [<text>]:
+	permission: factions.addon.peace
+	description: Make Peace
+	trigger:
+		if arg-text is not set:
+			send "&aNot Enough Input. /peace (nation)"
+
+		if arg-text is set:
+			make player execute command "f neutral %arg-text%"
+			stop
+			
+#Better Versions of Commands
+command /invite [<player>]:
+	permission: factions.addon.invite
+	description: Invite Others
+	trigger:
+		if arg-player is not set:
+			send "Pls Type Who To Invite"
+
+		if arg-player is set:
+			make player execute command "f invite add %arg-player%"
+			send "You have send invite to %arg-player%"
+			stop
+
+#Ally Command
+command /ally [<text>]:
+	permission: factions.addon.ally
+	description: Alliance With Others
+	trigger:
+		if arg-text is not set:
+			send "Type the name of the faction you wanna ally"
+
+		if arg-text is set:
+			make player execute command "f ally %arg-text%"
+			stop
+
+#Relations, Shows Enemies, Alliances. Simplified Version 
+command /relations:
+	permission: factions.addon.relation
+	description: Invite Others
+	trigger:
+		make player execute command "f relation list"
+		stop
+			
+			
+			
+#configs 
+command /fc [<text>] [<number>]:
+	permission: factions.addon.config
+	description: Configs
+	aliases: /fc
+	trigger: 
+#if nothing is set then just show the commands
+		if arg 1 is not set:
+			send "&6<===&bConfig Edits&6===>"
+			send "&b/fc facmax (number) &eFac Max Amount of Members"
+			send "&b/fc fPowerMax (number) &eFac Max Amount of Power" 
+			send "&b/fc fPowerPH (number) &eMember Power Gain Per Hour"
+			send "&b/fc fPowerPD (number) &eMember Power Loss Per Death"
+			send "&b/fc fPowerDefault (number) &eMember Default Power"
+#checks if arg 1 = facmax 
+		if arg 1 is set:
+			if arg 1 is "facmax":
+				if arg-number is not set:
+					send "&a====================================================="
+					send "&bPls type in the max amount of members that a faction can have"
+					send "&a====================================================="
+				if arg-number is set:
+					make player execute command "f config factionMemberLimit %arg 2%"
+					log "[MassiveCore Config Change] The factionMemberLimit has changed to %arg 2% by %player%"
+#factionPowerMax area
+			if arg 1 is "fPowerMax":
+				if arg-number is not set:
+					send "&a====================================================="
+					send "&bPls type in the max amount of power that a faction can have"
+					send "&a====================================================="
+				if arg-number is set:
+					make player execute command "f config factionPowerMax %arg 2%"
+					log "[MassiveCore Config Change] The factionPowerMax has changed to %arg 2% by %player%"
+#factionsPowerPerHour
+			if arg 1 is "fPowerPH":
+				if arg-number is not set:
+					send "&a====================================================="
+					send "&bPls type in the amount of power to gain per hour."
+					send "&a====================================================="
+				if arg-number is set:
+					make player execute command "f config powerPerHour %arg 2%"
+					log "[MassiveCore Config Change] The factionPowerHourGain has changed to %arg 2% by %player%"
+#factionsPowerPerDeath
+			if arg 1 is "fPowerPD":
+				if arg-number is not set:
+					send "&a====================================================="
+					send "&bPls type in the amount of power to loss per death."
+					send "&a====================================================="
+				if arg-number is set:
+					make player execute command "f config powerPerDeath %arg 2%"
+					log "[MassiveCore Config Change] The factionPowerLostPerDeath has changed to %arg 2% by %player%"
+#factionsPowerPerDeath
+			if arg 1 is "fPowerDefault":
+				if arg-number is not set:
+					send "&a====================================================="
+					send "&bPls type in the amount of power a member gets on join"
+					send "&a====================================================="
+				if arg-number is set:
+					make player execute command "f config defaultPlayerPower %arg 2%"
+					log "[MassiveCore Config Change] The factionPowerDefault has changed to %arg 2% by %player%"
+
+#fd means "faction decider" "2nd argument should be response of either "true" or "false"		
+command /fd [<text>] [<text>]:
+	permission: factions.addon.config
+	description: Configs_Tru_Fal
+	aliases: /fd
+	trigger: 
+#if nothing is set then just show the commands
+
+		if arg 1 is not set:
+			send "&6<===&bConfig Edits <true/false>&6===>"
+			send "&b/fd FactionTakeOthersClaims (true/false) &eDecide if factions can take other's land"
+			send "&b/fd fhomesEnabled (true/false) &eDecide if people can do /f home" 
+			send "&e Sidenote pls respond 'true' or 'false' "
+		if arg 1 is "FactionTakeOthersClaims" or "fhomeEnabled":
+			if arg 2 is not "true" or "false":
+				send "Pls type an appropriate response. true or false"
+			if arg 2 is "true" or "false":
+				if arg 1 is "FactionTakeOthersClaims":
+					make player execute command "f config claimingFromOthersAllowed %arg 2%" 
+					log "[MassiveCore Config Change] Member Power Gain has changed to %arg 2% by %player%"
+					stop
+				if arg 1 is "fhomeEnabled":
+					make player execute command "f config homesEnabled %arg 2%"
+					log "[MassiveCore Config Change] Member Power Loss has changed to %arg 2% by %player%"
+					stop
+		else:
+			send "&6<===&bConfig Edits <true/false>&6===>"
+			send "&b/fd FactionTakeOthersClaims (true/false) &eDecide if factions can take other's land"
+			send "&b/fd fhomesEnabled (true/false) &eDecide if people can do /f home" 
+			send "&e Sidenote pls respond 'true' or 'false' "
+				
+					
+		
