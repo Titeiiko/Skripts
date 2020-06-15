@@ -3,12 +3,20 @@
 
 #Support Discord: https://discord.gg/Af4rGAK
 
-#Version: 1.1.0
+#Version: 1.2.0
 
 #Changes (1.1.0):
 #Added /fah (Faction Addon Help)
 #Added /ally (Alliances)
 #Added Config Edits <True/False>
+
+#Changes (1.2.0):
+#Fixed Config Decider Spitting Too Much Output (Responding inappropriately)
+#Added New Config Decider Options
+#New Commands
+#/finfo (replacement of /f f (faction)
+#/playerinfo (replacement of /f player (player)
+#fixed relations command (typo)
 
 #FACTION COMMANDS ===================================================
 
@@ -29,7 +37,9 @@ command /fah:
 		send "&b/peace (nation) &eMake Peace" 
 		send "&b/invite (player) &eSend Invite to Player"
 		send "&b/ally (faction) &eSend Ally Request"
-		send "&b/relation Sends &eList of All Relations"
+		send "&b/relations &eSends List of All Relations"
+		send "&b/finfo (faction) &eSends info of faction"
+		send "&b/playerinfo (player) &eSends info of player"
 		send "&b<===&eFaction Staff Addons&b===>"
 		send "&b/fc &bShows Config &eEdits"
 		send "&b/fd &bShows Config &eEdits <true/false>"
@@ -90,9 +100,32 @@ command /relations:
 	trigger:
 		make player execute command "f relation list"
 		stop
-			
-			
-			
+
+command /finfo [<text>]:
+	permission: factions.addon.info
+	description: Info of other factions
+	trigger:
+		if arg-text is not set:
+			send "Type the name of the faction you wanna get info on"
+			stop
+		if arg-text is set:
+			make player execute command "f f %arg-text%"
+			stop
+
+command /playerinfo [<player>]:
+	permission: factions.addon.playerinfo
+	description: Info of Players
+	trigger:
+		if arg-player is not set:
+			send "Type the name of the player you wanna get info on"
+			stop
+		if arg-player is set:
+			make player execute command "f player %arg-player%"
+			stop
+
+
+
+
 #configs 
 command /fc [<text>] [<number>]:
 	permission: factions.addon.config
@@ -166,8 +199,12 @@ command /fd [<text>] [<text>]:
 			send "&6<===&bConfig Edits <true/false>&6===>"
 			send "&b/fd FactionTakeOthersClaims (true/false) &eDecide if factions can take other's land"
 			send "&b/fd fhomesEnabled (true/false) &eDecide if people can do /f home" 
-			send "&e Sidenote pls respond 'true' or 'false' "
-		if arg 1 is "FactionTakeOthersClaims" or "fhomeEnabled":
+			send "&b/fd fClaimsConnected (true/false) &eDecide if people can claim without claims being connected"
+			send "&b/fd disablePVPFactionless (true/false) &eDecide if people with no facs can pvp"
+			send "&b========="
+			send "&eSidenote pls respond 'true' or 'false' "
+			stop
+		if arg 1 is "FactionTakeOthersClaims" or "fhomeEnabled" or "fClaimsConnected" or "disablePVPFactionless":
 			if arg 2 is not "true" or "false":
 				send "Pls type an appropriate response. true or false"
 			if arg 2 is "true" or "false":
@@ -179,11 +216,23 @@ command /fd [<text>] [<text>]:
 					make player execute command "f config homesEnabled %arg 2%"
 					log "[MassiveCore Config Change] Member Power Loss has changed to %arg 2% by %player%"
 					stop
+				if arg 1 is "fClaimsConnected":
+					make player execute command "f config claimsMustBeConnected %arg 2%"
+					log "[MassiveCore Config Change] Faction Claims Must Be Connected has changed to %arg 2% by %player%"
+					stop
+				if arg 1 is "disablePVPFactionless":
+					make player execute command "f config disablePVPforFactionlessPlayers %arg 2%"
+					stop
 		else:
-			send "&6<===&bConfig Edits <true/false>&6===>"
-			send "&b/fd FactionTakeOthersClaims (true/false) &eDecide if factions can take other's land"
-			send "&b/fd fhomesEnabled (true/false) &eDecide if people can do /f home" 
-			send "&e Sidenote pls respond 'true' or 'false' "
-				
-					
+			send "&6Please type appriopriate response from /fd"
+			
+			
+#=======================
+#Scoreboard 
+#=======================
+#future ;)
+#=======================
+#Functions
+#=======================
+#futre ;)
 		
